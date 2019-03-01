@@ -2,8 +2,23 @@
 <%@ taglib prefix = "s" uri = "/struts-tags" %>
 
 <html>
-   <head>   	  
-      <title>main page</title>      
+   <head>  	  
+      <title>main page</title>
+      
+      <script src="scripts/jquery-3.3.1.min.js"></script>
+   	  <script src="scripts/bootstrap.js"></script>
+   	
+   	<script>  
+   	  $(document).ready(function() {
+		var msg = "${requestScope.msg}";
+		if (!(msg === "")) {			
+			alert(msg);
+			$('body').append(msg);
+		}		
+		console.log("Debug Info:${requestScope.sql}");
+	  });
+   	 </script>
+            
    </head>
    
    <body>
@@ -19,8 +34,7 @@
 		 
    </body>
    
-   <script src="scripts/jquery-3.3.1.min.js"></script>
-   <script src="scripts/bootstrap.js"></script>
+   
    
     
 </html>

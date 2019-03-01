@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.struts2.ServletActionContext;
 import org.owasp.encoder.Encode;
 import org.owasp.esapi.ESAPI;
@@ -33,11 +35,12 @@ public class LoginAction {
 			
 			conn = new DBModel().getConnection();
 			
-			String sql = "select id, account, name from user where account='" + account + "' and password='" + password + "'";			
+			String sql = "select id, account, password,name from user where account='" + account + "' and password='" + password + "'";
+			System.out.println("sql:"+sql);
+			
 			Statement stmt = conn.createStatement();			
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			System.out.println("sql:"+sql);
 			
 			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
@@ -46,6 +49,15 @@ public class LoginAction {
 				Integer id = rs.getInt("id");
 				String account = rs.getString("account");
 				String name = rs.getString("name");
+				String password = rs.getString("password");
+				
+				
+				Cookie cookie = new Cookie("account",account);
+				ServletActionContext.getResponse().addCookie(cookie);
+				
+				cookie = new Cookie("password",password);
+				ServletActionContext.getResponse().addCookie(cookie);
+				
 				
 				Map<String, Object> session = ActionContext.getContext().getSession();				
 				session.put("id",id);

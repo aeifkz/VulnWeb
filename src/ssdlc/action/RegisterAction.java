@@ -11,7 +11,7 @@ import ssdlc.model.DBModel;
 public class RegisterAction {
 	
 	private String account;
-	private String password;
+	private String password; 
 	private String name;	
 	
 	public String register() {
