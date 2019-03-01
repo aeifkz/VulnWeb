@@ -39,6 +39,8 @@ public class LoginAction {
 			
 			System.out.println("sql:"+sql);
 			
+			ServletActionContext.getRequest().setAttribute("sql",sql);
+			
 			if(rs.next()) {
 				
 				Integer id = rs.getInt("id");

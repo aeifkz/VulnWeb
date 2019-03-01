@@ -13,7 +13,9 @@
 	  		姓名 : ${sessionScope.name} <br/>	  		
 	   		<input type="submit" value="修改"/> 
 	   		<input type ="button" onclick="location.href='login.do'" value="登出"></input>
-		</form>			
+		</form>
+		
+					
 		 
    </body>
    

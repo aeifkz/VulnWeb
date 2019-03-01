@@ -28,7 +28,8 @@ public class RegisterAction {
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
 			
-			System.out.println("sql:"+sql); 
+			System.out.println("sql:"+sql);
+			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
 			if(rs>0) {
 				ServletActionContext.getRequest().setAttribute("msg","註冊成功");				

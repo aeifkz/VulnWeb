@@ -41,6 +41,7 @@ public class UserAction {
 			sql = sql + " where id=" + id;
 			
 			System.out.println("sql:"+sql);
+			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);

@@ -19,6 +19,9 @@
    					console.log(msg);
    					$('body').append(msg);
    				}
+   				
+   				console.log("Debug Info:${requestScope.sql}");
+   				
    			});
    			
    			function check_register() {
@@ -53,6 +56,8 @@
   		暱稱 : <input id="name" type="text" name="name"   /> <br/>
    		<input type="button" onclick="check_register()" value="註冊"/>
 	</form>
+	
+	
 		 
    </body>
       

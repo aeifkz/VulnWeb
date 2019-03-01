@@ -17,7 +17,8 @@
 		if (!(msg === "")) {			
 			alert(msg);
 			$('body').append(msg);
-		}
+		}		
+		console.log("Debug Info:${requestScope.sql}");
 	});
 
 	function check_login() {
@@ -49,6 +50,8 @@
 		<input type="button" onclick="check_login()" value="登入" /> 
 		<input type="button" onclick="location.href='register.jsp'" value="註冊"/>
 	</form>
+	
+	
 
 </body>
 
