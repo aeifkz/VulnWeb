@@ -34,8 +34,8 @@ public class LoginAction {
 		try {
 			
 			conn = new DBModel().getConnection();
-			
-			String sql = "select id, account, password,name from user where account='" + account + "' and password='" + password + "'";
+						
+			String sql = "select id, account, password,name from user where account like '" + account + "' and password='" + password + "'";
 			System.out.println("sql:"+sql);
 			
 			Statement stmt = conn.createStatement();			
