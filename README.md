@@ -6,7 +6,7 @@
 該網站包含弱點如下所示 : <br/>
 <ol>
   <li>SQL Injeciton</li>
-  <li>持續型以及DOM XSS</li>
+  <li>持續型、DOM XSS</li>
   <li>CSRF</li>
   <li>伺服器端未驗證參數</li>
   <li>未正確實作登出機制</li>
