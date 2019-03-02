@@ -35,7 +35,7 @@ public class LoginAction {
 			
 			conn = new DBModel().getConnection();
 						
-			String sql = "select id, account, password,name from user where account like '" + account + "' and password='" + password + "'";
+			String sql = "select id, account, password,name from user where account like '%" + account + "%' and password='" + password + "'";
 			System.out.println("sql:"+sql);
 			
 			Statement stmt = conn.createStatement();			
@@ -88,6 +88,11 @@ public class LoginAction {
 			return "fail";
 		
 	}
+	
+	public String loginOut() {
+		return "success";
+	}
+	
 
 	public String getAccount() {
 		return account;

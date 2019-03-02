@@ -17,12 +17,16 @@
             <result name="fail">index.jsp</result>
         </action>
         
+        <action name="loginOut" class="ssdlc.action.LoginAction" method="loginOut">
+            <result name="success" type="redirect">index.jsp</result>            
+        </action>        
+        
         <action name="register" class="ssdlc.action.RegisterAction" method="register">
             <result name="info">index.jsp</result>
         </action>
         
         <action name="edit" class="ssdlc.action.UserAction" method="edit">
-            <result name="info">main.jsp</result>
+            <result name="info" type="redirect">main.jsp</result>
         </action>
 
     </package>
