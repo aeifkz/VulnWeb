@@ -14,8 +14,7 @@
 		if (!(msg === "")) {			
 			alert(msg);
 			$('body').append(msg);
-		}		
-		console.log("Debug Info:${requestScope.sql}");
+		}
 	  });
    	 </script>
             
@@ -27,10 +26,10 @@
 	  		帳號 : ${sessionScope.account} <br/>
 	  		姓名 : ${sessionScope.name} <br/>	  		
 	   		<input type="submit" value="修改"/> 
-	   		<input type ="button" onclick="location.href='login.do'" value="登出"></input>
+	   		<input type ="button" onclick="location.href='loginOut.do'" value="登出"></input>
 		</form>
 		
-					
+		SQL Debug Info:${requestScope.sql} <br/>
 		 
    </body>
    

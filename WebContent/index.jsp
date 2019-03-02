@@ -17,14 +17,13 @@
 		if (!(msg === "")) {			
 			alert(msg);
 			$('body').append(msg);
-		}		
-		console.log("Debug Info:${requestScope.sql}");
+		}
 	});
 
 	function check_login() {
 		var account = $("#account").val();
 		console.log("account:" + account);
-		var re = new RegExp("^[A-Za-z]{5,30}$");
+		var re = new RegExp("^[A-Za-z]{4,30}$");
 		console.log("test:" + re.test(account));
 		$("#login").submit();
 		
@@ -32,7 +31,7 @@
 		if(re.test(account)) {
 			$("#login").submit();
 		}
-		else {
+		lse {
 			alert("帳號格式錯誤");
 		}
 		 */
@@ -50,8 +49,8 @@
 		<input type="button" onclick="check_login()" value="登入" /> 
 		<input type="button" onclick="location.href='register.jsp'" value="註冊"/>
 	</form>
-	
-	
+		
+	SQL Debug Info:${requestScope.sql} <br/>	
 
 </body>
 
