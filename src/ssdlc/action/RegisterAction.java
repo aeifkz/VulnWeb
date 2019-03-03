@@ -3,6 +3,8 @@ package ssdlc.action;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import ssdlc.model.DBModel;
@@ -10,13 +12,15 @@ import ssdlc.model.DBModel;
 
 public class RegisterAction {
 	
+	static Logger log = Logger.getLogger(RegisterAction.class);
+	
 	private String account;
 	private String password; 
 	private String name;	
 	
 	public String register() {
 		
-		System.out.println("Call register method " + account + " " + password + " " + name);
+		log.info("Call register method " + account + " " + password + " " + name);
 		
 		Connection conn = null;
 		
@@ -24,11 +28,12 @@ public class RegisterAction {
 			
 			conn = new DBModel().getConnection();			
 			
-			String sql = "insert into user (account,password,name)  values ('" + account + "','"+password+"','"+name+"') ;";			
+			String sql = "insert into user (account,password,name)  values ('" + account + "','"+password+"','"+name+"') ;";
+			log.debug("register sql:"+sql);
+			
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
-			
-			System.out.println("sql:"+sql);
+						
 			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
 			if(rs>0) {

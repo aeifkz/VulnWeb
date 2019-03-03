@@ -25,7 +25,6 @@
 			<secure>false</secure>			
 		</cookie-config>
 		
-		<tracking-mode>URL</tracking-mode>
 		<tracking-mode>COOKIE</tracking-mode>			
 	</session-config>
 

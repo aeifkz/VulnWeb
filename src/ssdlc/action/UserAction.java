@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -17,10 +18,12 @@ public class UserAction {
 	private String password;
 	private String name;
 	
+	static Logger log = Logger.getLogger(LoginAction.class.getName());
+	
 	
 	public String edit() {
-		
-		System.out.println("Call edit method " + id + " " + password + " " + name);
+				
+		log.info("Call edit method " + id + " " + password + " " + name);
 
 		Connection conn = null;
 
@@ -40,14 +43,12 @@ public class UserAction {
 			
 			sql = sql + " where id=" + id;
 			
-			System.out.println("sql:"+sql);
+			log.debug("edit sql:"+sql);
 			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
-			
-			System.out.println("sql:"+sql);
-			
+						
 			if(rs>0) {
 				
 				ServletActionContext.getRequest().setAttribute("msg","修改資料成功");

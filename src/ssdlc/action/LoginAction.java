@@ -1,31 +1,29 @@
 package ssdlc.action;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
-
 import javax.servlet.http.Cookie;
-
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.owasp.encoder.Encode;
-import org.owasp.esapi.ESAPI;
-import org.owasp.esapi.codecs.MySQLCodec;
-
 import com.opensymphony.xwork2.ActionContext;
 
 import ssdlc.model.DBModel;
 
 public class LoginAction {
+	
+	static Logger log = Logger.getLogger(LoginAction.class);
+	
 
 	private String account;
 	private String password;	
 	
 	public String login() {
-
-		System.out.println("Call login method " + account + " " + password);
+		
+		log.info("Call login method " + account + " " + password);
+				
 		
 		boolean is_success = false;
 		
@@ -36,7 +34,8 @@ public class LoginAction {
 			conn = new DBModel().getConnection();
 						
 			String sql = "select id, account, password,name from user where account like '%" + account + "%' and password='" + password + "'";
-			System.out.println("sql:"+sql);
+			log.debug("login sql:"+sql);
+			
 			
 			Statement stmt = conn.createStatement();			
 			ResultSet rs = stmt.executeQuery(sql);
