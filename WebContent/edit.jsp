@@ -50,7 +50,7 @@
    <body>
       
    	<form id="edit" action="edit.do" method="get">  		
-  		密碼 : <input id="password" type="password" name="password"  /> <br/>
+  		密碼 : <input id="password" type="password" name="password"  /> <br/>  		
   		暱稱 : <input id="name" type="text" name="name"   /> <br/>
   		<input type="hidden" name="id" value="${sessionScope.id}" />
    		<input type="button" onclick="check_edit()" value="變更資料"/>

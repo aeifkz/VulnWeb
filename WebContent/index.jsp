@@ -13,28 +13,17 @@
 <script>
 
 	$(document).ready(function() {
+		//TODO Day2 針對訊息內容作對應的消毒
 		var msg = "${requestScope.msg}";
 		if (!(msg === "")) {			
 			alert(msg);
+			//TODO Day2 針對 msg 內容作 HTML 消毒
 			$('body').append(msg);
 		}
 	});
 
 	function check_login() {
-		var account = $("#account").val();
-		console.log("account:" + account);
-		var re = new RegExp("^[A-Za-z]{4,30}$");
-		console.log("test:" + re.test(account));
-		$("#login").submit();
-		
-		/*
-		if(re.test(account)) {
-			$("#login").submit();
-		}
-		lse {
-			alert("帳號格式錯誤");
-		}
-		 */
+		$("#login").submit();		
 	}
 	
 </script>

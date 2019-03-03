@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import ssdlc.model.DBModel;
+import ssdlc.model.LogModel;
 
 
 public class RegisterAction {
@@ -20,7 +21,11 @@ public class RegisterAction {
 	
 	public String register() {
 		
-		log.info("Call register method " + account + " " + password + " " + name);
+		log.info(LogModel.log_sanitized("Call register method " + account + " " + password + " " + name));
+		
+		
+		//TODO Day2 針對帳號做格式驗證, 規則 ^[A-Za-z]{4,20}$		
+		
 		
 		Connection conn = null;
 		
@@ -29,8 +34,9 @@ public class RegisterAction {
 			conn = new DBModel().getConnection();			
 			
 			String sql = "insert into user (account,password,name)  values ('" + account + "','"+password+"','"+name+"') ;";
-			log.debug("register sql:"+sql);
+			log.debug(LogModel.log_sanitized("register sql:"+sql));
 			
+			//TODO Day2 使用 prepareStatement 預防 SQL Injection
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
 						
@@ -52,7 +58,7 @@ public class RegisterAction {
 			conn.close();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error("資料庫操作錯誤",ex);			
 		}
 		
 		return "info";

@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 
 import ssdlc.model.DBModel;
+import ssdlc.model.LogModel;
 
 public class UserAction {
 	
@@ -22,8 +23,10 @@ public class UserAction {
 	
 	
 	public String edit() {
+		
+		//TODO Day3 實作 CSRF token 防禦措施		
 				
-		log.info("Call edit method " + id + " " + password + " " + name);
+		log.info(LogModel.log_sanitized("Call edit method " + id + " " + password + " " + name));
 
 		Connection conn = null;
 
@@ -36,16 +39,16 @@ public class UserAction {
 			if(password!=null && !password.isEmpty()) {
 				sql = sql + ", password='" + password + "'";
 			}
-			
 			if(name!=null && !name.isEmpty()) {
 				sql = sql + ", name='" + name + "'";
 			}
 			
 			sql = sql + " where id=" + id;
 			
-			log.debug("edit sql:"+sql);
+			log.debug(LogModel.log_sanitized("edit sql:"+sql));
 			ServletActionContext.getRequest().setAttribute("sql",sql);
 			
+			//TODO Day2 使用 prepareStatement 預防 SQL Injection
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
 						
@@ -53,8 +56,7 @@ public class UserAction {
 				
 				ServletActionContext.getRequest().setAttribute("msg","修改資料成功");
 				
-				Map<String, Object> session = ActionContext.getContext().getSession();
-				
+				Map<String, Object> session = ActionContext.getContext().getSession();				
 				if(name!=null && !name.isEmpty()) {
 					session.put("name",name);
 				}
@@ -68,7 +70,7 @@ public class UserAction {
 			conn.close();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error("資料庫操作錯誤",ex);			
 		}
 		
 		return "info";

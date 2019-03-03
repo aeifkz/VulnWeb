@@ -7,23 +7,25 @@ import java.sql.Statement;
 import java.util.Map;
 import javax.servlet.http.Cookie;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.apache.struts2.ServletActionContext;
+
+import com.mysql.cj.log.Log;
 import com.opensymphony.xwork2.ActionContext;
 
 import ssdlc.model.DBModel;
+import ssdlc.model.LogModel;
 
 public class LoginAction {
 	
 	static Logger log = Logger.getLogger(LoginAction.class);
 	
-
 	private String account;
 	private String password;	
 	
 	public String login() {
 		
-		log.info("Call login method " + account + " " + password);
-				
+		log.info(LogModel.log_sanitized("Call login method " + account + " " + password));
 		
 		boolean is_success = false;
 		
@@ -34,9 +36,9 @@ public class LoginAction {
 			conn = new DBModel().getConnection();
 						
 			String sql = "select id, account, password,name from user where account like '%" + account + "%' and password='" + password + "'";
-			log.debug("login sql:"+sql);
+			log.debug(LogModel.log_sanitized("login sql:"+sql));
 			
-			
+			//TODO Day2 使用 prepareStatement 預防 SQL Injection
 			Statement stmt = conn.createStatement();			
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -51,6 +53,7 @@ public class LoginAction {
 				String password = rs.getString("password");
 				
 				
+				//TODO Day3 將 cookie 設定為只允許使用 HTTP 存取
 				Cookie cookie = new Cookie("account",account);
 				ServletActionContext.getResponse().addCookie(cookie);
 				
@@ -60,6 +63,7 @@ public class LoginAction {
 				
 				Map<String, Object> session = ActionContext.getContext().getSession();				
 				session.put("id",id);
+				//TODO Day2 針對 account 內容作 HTML消毒
 				session.put("account",account);
 				session.put("name",name);
 				
@@ -68,8 +72,9 @@ public class LoginAction {
 			}
 			else {
 				if(account!=null) {
-					//account = Encode.forHtml(account);
-					ServletActionContext.getRequest().setAttribute("msg","帳號"+account+"不存在或是密碼錯誤");
+					//TODO Day2 針對訊息內容作對應的消毒
+					String msg = "帳號"+account+"不存在或是密碼錯誤";
+					ServletActionContext.getRequest().setAttribute("msg",msg);
 				}				
 			}			
 			
@@ -78,7 +83,7 @@ public class LoginAction {
 			conn.close();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error("資料庫操作錯誤",ex);			
 		}
 		
 		if(is_success)

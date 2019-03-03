@@ -30,15 +30,12 @@
    				var re = new RegExp("^[A-Za-z]{4,30}$");
    				console.log("test:"+re.test(account));
    				
-   				//$("#register").submit();
-   				
    				if(re.test(account)) {
    					$("#register").submit();
    				}
    				else {
    					alert("帳號格式錯誤");
    				}
-   				
    				
    			}
    			
