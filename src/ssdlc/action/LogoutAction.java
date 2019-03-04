@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutAction extends HttpServlet  {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher view = req.getRequestDispatcher("index.jsp");
-		view.forward(req,resp);
+		//TODO Day3 正確實作登出機制
+		resp.sendRedirect("index.jsp");		
 	}
 
 }
