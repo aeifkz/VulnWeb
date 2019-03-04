@@ -23,7 +23,7 @@
 	});
 
 	function check_login() {
-		$("#login").submit();		
+		$("#login").submit();
 	}
 	
 </script>
@@ -32,7 +32,7 @@
 
 <body>
 
-	<form id="login" action="login.do" method="post">
+	<form id="login" action="login" method="post">
 		帳號 : <input id="account" type="text" name="account" /> <br /> 
 		密碼 : <input id="password" type="password" name="password" /> <br /> 
 		<input type="button" onclick="check_login()" value="登入" /> 

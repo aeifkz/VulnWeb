@@ -6,8 +6,7 @@
 	<display-name>StrutsTest</display-name>
 
 	<filter>
-		<filter-name>struts2</filter-name>
-		<!-- 這邊名字要寫對 , 因為網路上的範例少 .ng -->
+		<filter-name>struts2</filter-name>		
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
 

@@ -1,29 +1,38 @@
 package ssdlc.action;
 
+import java.io.IOException;
 import java.sql.Connection;
-
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Map;
+import java.sql.Statement; 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-import org.apache.struts2.ServletActionContext;
-
-import com.mysql.cj.log.Log;
-import com.opensymphony.xwork2.ActionContext;
 
 import ssdlc.model.DBModel;
 import ssdlc.model.LogModel;
 
-public class LoginAction {
+@WebServlet(name="login",urlPatterns={"/login"})
+public class LoginAction extends HttpServlet {
 	
+	private static final long serialVersionUID = 1L;
+
 	static Logger log = Logger.getLogger(LoginAction.class);
 	
 	private String account;
-	private String password;	
+	private String password;
 	
-	public String login() {
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		account = req.getParameter("account");
+		password = req.getParameter("password");
 		
 		log.info(LogModel.log_sanitized("Call login method " + account + " " + password));
 		
@@ -43,7 +52,7 @@ public class LoginAction {
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			
-			ServletActionContext.getRequest().setAttribute("sql",sql);
+			req.setAttribute("sql",sql);
 			
 			if(rs.next()) {
 				
@@ -55,17 +64,17 @@ public class LoginAction {
 				
 				//TODO Day3 將 cookie 設定為只允許使用 HTTP 存取
 				Cookie cookie = new Cookie("account",account);
-				ServletActionContext.getResponse().addCookie(cookie);
+				resp.addCookie(cookie);
 				
 				cookie = new Cookie("password",password);
-				ServletActionContext.getResponse().addCookie(cookie);
+				resp.addCookie(cookie);
 				
 				
-				Map<String, Object> session = ActionContext.getContext().getSession();				
-				session.put("id",id);
+				HttpSession session = req.getSession();				
+				session.setAttribute("id",id);
 				//TODO Day2 針對 account 內容作 HTML消毒
-				session.put("account",account);
-				session.put("name",name);
+				session.setAttribute("account",account);
+				session.setAttribute("name",name);
 				
 				is_success = true;
 
@@ -74,7 +83,7 @@ public class LoginAction {
 				if(account!=null) {
 					//TODO Day2 針對訊息內容作對應的消毒
 					String msg = "帳號"+account+"不存在或是密碼錯誤";
-					ServletActionContext.getRequest().setAttribute("msg",msg);
+					req.setAttribute("msg",msg);
 				}				
 			}			
 			
@@ -86,32 +95,14 @@ public class LoginAction {
 			log.error("資料庫操作錯誤",ex);			
 		}
 		
-		if(is_success)
-			return "success";
-		else 
-			return "fail";
-		
+		if(is_success) {
+			RequestDispatcher view = req.getRequestDispatcher("main.jsp");
+			view.forward(req,resp);
+		}			
+		else {
+			RequestDispatcher view = req.getRequestDispatcher("index.jsp");
+			view.forward(req,resp);
+		}
 	}
 	
-	public String loginOut() {
-		return "success";
-	}
-	
-
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 }

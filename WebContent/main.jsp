@@ -24,12 +24,12 @@
    
    <body>
    
-	   	<form action="edit.jsp" method="get">
+	   	<form>
 	   		<!-- TODO Day2 針對 account,name 內容作 HTML消毒  -->	   		
 	  		帳號 : ${sessionScope.account} <br/>
 	  		姓名 : ${sessionScope.name} <br/>	  		
-	   		<input type="submit" value="修改"/> 
-	   		<input type ="button" onclick="location.href='loginOut.do'" value="登出"></input>
+	   		<input type="button" onclick="location.href='edit.jsp'" value="修改"/> 
+	   		<input type="button" onclick="location.href='logout'" value="登出"></input>
 		</form>
 		
 		SQL Debug Info:${requestScope.sql} <br/>

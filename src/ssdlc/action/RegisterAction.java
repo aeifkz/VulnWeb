@@ -1,25 +1,36 @@
 package ssdlc.action;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
-
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 
 import ssdlc.model.DBModel;
 import ssdlc.model.LogModel;
 
 
-public class RegisterAction {
+@WebServlet(name="register",urlPatterns="/register")
+public class RegisterAction extends HttpServlet {
 	
 	static Logger log = Logger.getLogger(RegisterAction.class);
 	
 	private String account;
 	private String password; 
-	private String name;	
+	private String name;
 	
-	public String register() {
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		account = req.getParameter("account");
+		password = req.getParameter("password");
+		name = req.getParameter("name");
 		
 		log.info(LogModel.log_sanitized("Call register method " + account + " " + password + " " + name));
 		
@@ -40,17 +51,17 @@ public class RegisterAction {
 			Statement stmt = conn.createStatement();			
 			int rs = stmt.executeUpdate(sql);
 						
-			ServletActionContext.getRequest().setAttribute("sql",sql);
+			req.setAttribute("sql",sql);
 			
 			if(rs>0) {
-				ServletActionContext.getRequest().setAttribute("msg","註冊成功");				
+				req.setAttribute("msg","註冊成功");				
 			}
 			else {
 				if(account!=null) {				
-					ServletActionContext.getRequest().setAttribute("msg","帳號"+account+"註冊失敗");
+					req.setAttribute("msg","帳號"+account+"註冊失敗");
 				}
 				else {
-					ServletActionContext.getRequest().setAttribute("msg","註冊失敗");
+					req.setAttribute("msg","註冊失敗");
 				}
 			}			
 						
@@ -61,33 +72,11 @@ public class RegisterAction {
 			log.error("資料庫操作錯誤",ex);			
 		}
 		
-		return "info";
+		RequestDispatcher view = req.getRequestDispatcher("index.jsp");
+		view.forward(req,resp);
 		
 	}
-
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+		
 	
 	
 }

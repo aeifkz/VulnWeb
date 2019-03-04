@@ -3,7 +3,6 @@
 
 <html>
 
-
    <head>
    
       <title>Hello World</title>
@@ -45,7 +44,7 @@
    
    <body>
       
-   	<form id="register" action="register.do" method="get">
+   	<form id="register" action="register" method="get">
    		帳號 : <input id="account" type="text" name="account"  /> <br/>
   		密碼 : <input id="password" type="password" name="password"  /> <br/>
   		暱稱 : <input id="name" type="text" name="name"   /> <br/>
